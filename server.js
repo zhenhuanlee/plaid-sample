@@ -73,7 +73,7 @@ app.get('/', function(request, response, next) {
     PLAID_OAUTH_REDIRECT_URI: PLAID_OAUTH_REDIRECT_URI,
     PLAID_OAUTH_NONCE: PLAID_OAUTH_NONCE,
     ITEM_ID: ITEM_ID,
-    ACCESS_TOKEN: '',
+    ACCESS_TOKEN: ACCESS_TOKEN,
   });
 });
 
@@ -92,25 +92,23 @@ app.get('/oauth-response.html', function(request, response, next) {
 // an API access_token
 // https://plaid.com/docs/#exchange-token-flow
 app.post('/get_access_token', function(request, response, next) {
-  console.log(request)
-  console.log(response)
-  // PUBLIC_TOKEN = request.body.public_token;
-  // client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
-  //   if (error != null) {
-  //     prettyPrintResponse(error);
-  //     return response.json({
-  //       error: error,
-  //     });
-  //   }
-  //   ACCESS_TOKEN = tokenResponse.access_token;
-  //   ITEM_ID = tokenResponse.item_id;
-  //   prettyPrintResponse(tokenResponse);
-  //   response.json({
-  //     access_token: ACCESS_TOKEN,
-  //     item_id: ITEM_ID,
-  //     error: null,
-  //   });
-  // });
+  PUBLIC_TOKEN = request.body.public_token;
+  client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
+    if (error != null) {
+      prettyPrintResponse(error);
+      return response.json({
+        error: error,
+      });
+    }
+    ACCESS_TOKEN = tokenResponse.access_token;
+    ITEM_ID = tokenResponse.item_id;
+    prettyPrintResponse(tokenResponse);
+    response.json({
+      access_token: ACCESS_TOKEN,
+      item_id: ITEM_ID,
+      error: null,
+    });
+  });
 });
 
 

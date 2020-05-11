@@ -8,6 +8,7 @@
 
 const plaid = require('plaid')
 const moment = require('moment')
+const fs = require('fs');
 
 const PLAID_CLIENT_ID = '5eb118010b2dcc00124d04f3'
 const PLAID_SECRET = '81d7438fc4dc4f2508966b701e5192'
@@ -36,6 +37,15 @@ const plaidClient = new plaid.Client(
   const accessToken = res.access_token
    */
 
+  await getCategories()
+})()
+
+async function getCategories() {
+  const categories = await plaidClient.getCategories()
+  fs.writeFileSync('./categories.json', JSON.stringify(categories))
+}
+
+async function getTx() {
   const accessToken = 'access-sandbox-293e2a2d-6300-4b49-a8e0-91da55ce1fba'
  
   var startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');
@@ -44,4 +54,4 @@ const plaidClient = new plaid.Client(
   const txs = await plaidClient.getTransactions(accessToken, startDate, endDate)
 
   console.log(JSON.stringify(txs, null, 2))
-})()
+}

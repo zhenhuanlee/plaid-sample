@@ -5,4 +5,4 @@ PLAID_PUBLIC_KEY=6922f254ead6cd2e5c1552f534f291 \
 PLAID_PRODUCTS=transactions \
 PLAID_COUNTRY_CODES=US \
 PLAID_ENV=sandbox \
-node index.js
+node server.js

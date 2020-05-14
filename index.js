@@ -37,7 +37,7 @@ const plaidClient = new plaid.Client(
   const accessToken = res.access_token
    */
 
-  await getCategories()
+  await getTx()
 })()
 
 async function getCategories() {
@@ -48,10 +48,10 @@ async function getCategories() {
 async function getTx() {
   const accessToken = 'access-sandbox-293e2a2d-6300-4b49-a8e0-91da55ce1fba'
  
-  var startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');
+  var startDate = moment().subtract(1, 'year').format('YYYY-MM-DD');
   var endDate = moment().format('YYYY-MM-DD');
 
   const txs = await plaidClient.getTransactions(accessToken, startDate, endDate)
 
-  console.log(JSON.stringify(txs, null, 2))
+  fs.writeFileSync('./txs.json', JSON.stringify(txs))
 }
